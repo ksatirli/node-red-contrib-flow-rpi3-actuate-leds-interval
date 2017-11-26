@@ -1,0 +1,115 @@
+[
+    {
+        "id": "990ce798.c4e47",
+        "type": "tab",
+        "label": "actuate LEDs (time-based)",
+        "disabled": false,
+        "info": "# Node RED: actuate LEDs (interval)\n\n> This repository is a [Node RED](https://nodered.org/) Flow that actuates two LEDs on a set interval and makes the payload (a binary output on the status of a _Pin_) available.\n\n## Table of Contents\n\n- [Hardware](#hardware)\n- [Wiring](#wiring)\n- [Usage](#usage)\n- [Author Information](#author-information)\n- [License](#license)\n\n## Hardware\n\n* 1 Raspberry Pi 3\n* 1 breadboard\n* 2 resistors (270-550 Ohms)\n* 3 jumper cables (female to male)\n* 2 LEDs\n\n## Wiring\n\nThis flow actuates two LEDs; one on _Pin 11_, the other on _Pin 13_.\n\nA wiring diagram is included in the `fritzing.png` file.\n\n## Usage\n\nImport this flow into _Node RED_ by clicking on the hamburger menu, followed by _\"Import\"_ and _\"Clipboard\"_.\n\nThe import dialogue can also be triggered by pressing `CTRL` and `I` on your keyboard.\n\nThen, paste the contents of `flow.json` into the text area and click _\"Import\"_.\n\n## Author Information\n\nThis flow is currently maintained by the individuals listed below.\n\n- [Kerim Satirli](https://github.com/ksatirli)\n\nDevelopment of this module was sponsored by [Method](https://github.com/withmethod).\n\n## License\n\nCopyright 2017 [Kerim Satirli](https://github.com/ksatirli)\n\nLicensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License.\n\nYou may obtain a copy of the License at [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an _\"AS IS\"_ basis, without WARRANTIES or conditions of any kind, either express or implied.\n\nSee the License for the specific language governing permissions and limitations under the License.\n"
+    },
+    {
+        "id": "8a521991.2780f",
+        "type": "function",
+        "z": "990ce798.c4e47",
+        "name": "toggle input",
+        "func": "context.state = context.state || 0;\n\n(context.state == 0) ? context.state = 1 : context.state = 0;\nmsg.payload = context.state;\n\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 1030,
+        "y": 80,
+        "wires": [
+            [
+                "f8d884d.2d5f7f8",
+                "29fe1983.b88a3e"
+            ]
+        ]
+    },
+    {
+        "id": "f8d884d.2d5f7f8",
+        "type": "debug",
+        "z": "990ce798.c4e47",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 1290,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "af9b222f.582ee8",
+        "type": "inject",
+        "z": "990ce798.c4e47",
+        "name": "tick every 1 sec",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "x": 790,
+        "y": 200,
+        "wires": [
+            [
+                "8a521991.2780f",
+                "afc89f84.99fcd8"
+            ]
+        ]
+    },
+    {
+        "id": "29fe1983.b88a3e",
+        "type": "rpi-gpio out",
+        "z": "990ce798.c4e47",
+        "name": "red LED (Pin 11)",
+        "pin": "11",
+        "set": false,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 1300,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "afc89f84.99fcd8",
+        "type": "function",
+        "z": "990ce798.c4e47",
+        "name": "toggle input",
+        "func": "context.state = context.state || 0;\n\n(context.state == 0) ? context.state = 1 : context.state = 0;\nmsg.payload = context.state;\n\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 1030,
+        "y": 320,
+        "wires": [
+            [
+                "19368bf6.30ecc4",
+                "16b58275.239536"
+            ]
+        ]
+    },
+    {
+        "id": "19368bf6.30ecc4",
+        "type": "debug",
+        "z": "990ce798.c4e47",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 1290,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "16b58275.239536",
+        "type": "rpi-gpio out",
+        "z": "990ce798.c4e47",
+        "name": "green LED (pin 13)",
+        "pin": "13",
+        "set": false,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 1310,
+        "y": 280,
+        "wires": []
+    }
+]
